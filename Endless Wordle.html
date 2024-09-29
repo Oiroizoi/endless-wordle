@@ -1,292 +1,302 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Endless Wordle</title>
-    <link rel="icon" href="img/favicon.png">
-    <style>
-      :root {
-        --color-red: #bf0000;
-        --color-brown: #802000;
-        --color-orange: #ff4000;
-        --color-gold: #fa0;
-        --color-yellow: #ffbf00;
-        --color-green: #00bf00;
-        --color-cyan: #009fbf;
-        --color-blue: #0040bf;
-        --color-purple: #bf00ff;
-        --color-pink: #ff4080;
-        --dark-gray: #555;
 
-        --light-red: #ff6860;
-        --light-brown: #bf6040;
-        --light-orange: #ff8f40;
-        --light-yellow: #ffdf40;
-        --light-green: #80ff80;
-        --light-cyan: #80ffff;
-        --light-blue: #bfcfff;
-        --light-purple: #df80ff;
-        --light-pink: #ff80bfff;
-        --light-gray: #ccc;
+<head>
+  <meta charset="utf-8">
+  <title>Endless Wordle</title>
+  <link rel="icon" href="img/favicon.png">
+  <style>
+    :root {
+      --color-red: #bf0000;
+      --color-brown: #802000;
+      --color-orange: #ff4000;
+      --color-gold: #fa0;
+      --color-yellow: #ffbf00;
+      --color-green: #00bf00;
+      --color-cyan: #009fbf;
+      --color-blue: #0040bf;
+      --color-purple: #bf00ff;
+      --color-pink: #ff4080;
+      --dark-gray: #555;
 
-        --bg-dark: #333;
-        --bg-darker: #222;
-        --bg-dark-highlight: #444;
-        --bg-dark-red: #400;
-        --bg-dark-yellow: #430;
-        --bg-dark-green: #243;
-        --bg-dark-blue: #000922;
-        --bg-dark-purple: #423;
-      }
+      --light-red: #ff6860;
+      --light-brown: #bf6040;
+      --light-orange: #ff8f40;
+      --light-yellow: #ffdf40;
+      --light-green: #80ff80;
+      --light-cyan: #80ffff;
+      --light-blue: #bfcfff;
+      --light-purple: #df80ff;
+      --light-pink: #ff80bfff;
+      --light-gray: #ccc;
 
-      body {
-        --bg-color: var(--bg-dark);
-        --main-color: white;
-        --gray-color: var(--light-gray);
-        --emphasis-color: var(--bg-darker);
-        --highlight-color: var(--bg-dark-highlight);
-        --theme-color: var(--light-green);
+      --bg-dark: #333;
+      --bg-darker: #222;
+      --bg-dark-highlight: #444;
+      --bg-dark-red: #400;
+      --bg-dark-yellow: #430;
+      --bg-dark-green: #243;
+      --bg-dark-blue: #000922;
+      --bg-dark-purple: #423;
+    }
 
-        background: var(--bg-color);
-        color: var(--main-color);
-        font: 16px "Segoe UI", sans-serif;
-        padding: 8px;
-      }
+    body {
+      --bg-color: var(--bg-dark);
+      --main-color: white;
+      --gray-color: var(--light-gray);
+      --emphasis-color: var(--bg-darker);
+      --highlight-color: var(--bg-dark-highlight);
+      --theme-color: var(--light-green);
 
-      .centered, .hCentered.vCentered {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-      }
+      background: var(--bg-color);
+      color: var(--main-color);
+      font: 1vh "Segoe UI", sans-serif;
+    }
 
-      .hCentered {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-      }
+    .centered,
+    .hCentered.vCentered {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
 
-      .vCentered {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-      }
+    .hCentered {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
 
-      table, th, td {
-        border: 1px solid;
-        border-collapse: collapse;
-      }
+    .vCentered {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
 
-      #scoreBox {
-        font-size: 40px;
-        top: 10px;
-      }
+    table,
+    th,
+    td {
+      border: 0.1vh solid;
+      border-collapse: collapse;
+    }
 
-      #boxes {
-        top: 70px;
-        border-collapse: separate;
-        border-spacing: 15px;
-        border: none;
-      }
+    #scoreBox {
+      font-size: 5vh;
+      top: 1vh;
+    }
 
-      td {
-        width: 70px;
-        height: 70px;
-        font-size: 40px;
-        font-weight: 600;
-        user-select: none;
-      }
+    #boxes {
+      top: 7.5vh;
+      border-collapse: separate;
+      border-spacing: 2vh;
+      border: none;
+    }
 
-      #keys {
-        bottom: 15px;
-        width: 750px;
-      }
+    td {
+      width: 8vh;
+      height: 8vh;
+      font-size: 5vh;
+      font-weight: 600;
+      user-select: none;
+    }
 
-      .key {
-        position: relative;
-        display: inline-block;
-        border-radius: 5px;
-        color: var(--bg-dark);
-        margin: 5px;
-        font-size: 35px;
-        font-weight: 600;
-        line-height: 65px;
-        width: 45px;
-        height: 65px;
-        text-align: center;
-        user-select: none;
-        background-color: white;
-        cursor: pointer;
-      }
+    #keys {
+      bottom: 2vh;
+      width: 100vh;
+    }
 
-      .key:hover {
-        background-color: var(--light-gray);
-      }
+    .key {
+      position: relative;
+      display: inline-block;
+      border-radius: 0.7vh;
+      color: var(--bg-dark);
+      margin: 0.6vh;
+      font-size: 3.5vh;
+      font-weight: 600;
+      line-height: 7vh;
+      width: 8vh;
+      height: 7vh;
+      text-align: center;
+      user-select: none;
+      background-color: white;
+      cursor: pointer;
+    }
 
-      .key.unselectable {
-        opacity: 75%;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="scoreBox" class="hCentered">
-      <b>Score:</b> <span id="score">0</span>
-      <b style="margin-left: 20px;">Best:</b> <span id="highScore"></span>
-    </div>
-    <table id="boxes" class="hCentered"></table>
-    <div id="keys" class="hCentered"></div>
-  </body>
-  <script src="words.js"></script>
-  <script>
-    {
-      let word;
-      let guess = "";
-      let guessed = 0;
-      let score = 0;
-      let highScore = localStorage.getItem("highScore") || 0;
+    .key:hover {
+      background-color: var(--light-gray);
+    }
 
-      document.getElementById("highScore").innerHTML = highScore;
+    .key.unselectable {
+      opacity: 75%;
+    }
+  </style>
+</head>
 
-      let boxes = "";
-      for (let row = 0; row < 6; row++) {
-        boxes += "<tr>";
-        for (let col = 0; col < 5; col++) boxes += `<td id="r${row}c${col}"></td>`;
-        boxes += "</tr>";
-      }
-      document.getElementById("boxes").innerHTML = boxes;
+<body>
+  <div id="scoreBox" class="hCentered">
+    <b>Score:</b> <span id="score">0</span>
+    <b style="margin-left: 3vh;">Best:</b> <span id="highScore"></span>
+  </div>
+  <table id="boxes" class="hCentered"></table>
+  <div id="keys" class="hCentered"></div>
+</body>
+<script src="words.js"></script>
+<script>
+  {
+    let word;
+    let wordDefinition;
+    let guess = "";
+    let guessed = 0;
+    let score = 0;
+    let highScore = localStorage.getItem("highScore") || 0;
 
-      let letterList = "abcdefghijklmnopqrstuvwxyz";
-      for (let i = 0; i < letterList.length; i++) {
+    document.getElementById("highScore").innerHTML = highScore;
+
+    let boxes = "";
+    for (let row = 0; row < 6; row++) {
+      boxes += "<tr>";
+      for (let col = 0; col < 5; col++) boxes += `<td id="r${row}c${col}"></td>`;
+      boxes += "</tr>";
+    }
+    document.getElementById("boxes").innerHTML = boxes;
+
+    let letterRows = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+    letterRows.forEach((row, i) => {
+      for (let j = 0; j < row.length; j++) {
         let key = document.createElement("div");
-        key.id = letterList[i];
+        key.id = row[j];
         key.classList.add("key");
-        key.onclick = () => addLetter(letterList[i]);
-        key.innerText = letterList[i];
+        key.onclick = () => addLetter(row[j]);
+        key.innerText = row[j];
         document.getElementById("keys").append(key);
       }
-      let backspaceKey = document.createElement("div");
-      backspaceKey.id = "Enter";
-      backspaceKey.classList.add("key");
-      backspaceKey.style.width = "250px";
-      backspaceKey.onclick = () => backspace();
-      backspaceKey.innerText = "Backspace";
-      document.getElementById("keys").append(backspaceKey);
-      let enterKey = document.createElement("div");
-      enterKey.id = "Enter";
-      enterKey.classList.add("key");
-      enterKey.style.width = "235px";
-      enterKey.onclick = () => guessWord();
-      enterKey.innerText = "Guess";
-      document.getElementById("keys").append(enterKey);
+      if (i < 2) document.getElementById("keys").append(document.createElement("br"));
+    });
+    let backspaceKey = document.createElement("div");
+    backspaceKey.classList.add("key");
+    backspaceKey.style.width = "13vh";
+    backspaceKey.onclick = () => backspace();
+    backspaceKey.innerText = "Back";
+    document.getElementById("keys").insertBefore(backspaceKey, document.getElementById("z"));
+    let enterKey = document.createElement("div");
+    enterKey.classList.add("key");
+    enterKey.style.width = "15vh";
+    enterKey.onclick = () => guessWord();
+    enterKey.innerText = "Guess";
+    document.getElementById("keys").append(enterKey);
 
-      /*wordList = [list of five-letter words];*/
+    /*wordList = [list of five-letter words];*/
 
-      async function newWord() {
-        guessed = 0;
-        let boxes = Array.from(document.querySelectorAll("td"));
-        let keys = Array.from(document.querySelectorAll(".key"));
-        boxes.forEach(box => {
-          box.style.background = null;
-          box.innerText = null;
-        });
-        keys.forEach(key => key.style.background = null);
-        word = "";
-        while (!word) {
-          let randomWord = wordList[Math.floor(Math.random() * wordList.length)]; //Get a random word
-          //Check if it's in the dictionary to filter out obscure words
-          let definition = await new Promise((resolve, reject) => {
-            let request = new XMLHttpRequest();
-            request.open("GET", "https://api.dictionaryapi.dev/api/v2/entries/en_US/" + randomWord);
-            request.onload = () => resolve(JSON.parse(request.responseText));
-            request.send(null);
-          });
-          if (definition.title != "No Definitions Found") word = randomWord;
-        }
-      }
-      newWord();
-
-      function addLetter(letter) {
-        if (guess.length < 5) {
-          let box = document.getElementById(`r${guessed}c${guess.length}`);
-          box.innerText = letter;
-          guess += letter;
-        }
-      }
-
-      function backspace() {
-        if (guess.length) {
-          let box = document.getElementById(`r${guessed}c${guess.length - 1}`);
-          box.innerText = null;
-          guess = guess.slice(0, -1);
-        }
-      }
-
-      document.addEventListener("keydown", e => {
-        if (/^[a-z]{1}$/.test(e.key)) addLetter(e.key); //If a letter key is pressed, guess that letter
-        if (e.key == "Backspace") backspace();
-        if (e.key == "Enter") guessWord();
+    async function newWord() {
+      guessed = 0;
+      let boxes = Array.from(document.querySelectorAll("td"));
+      let keys = Array.from(document.querySelectorAll(".key"));
+      boxes.forEach(box => {
+        box.style.background = null;
+        box.innerText = null;
       });
-
-      function guessWord() {
-        if (guess.length == 5) {
-          if (!wordList.includes(guess)) {
-            alert("Not in word list");
-          } else if (!word) {
-            alert("Still getting a word. Try again in a few seconds.");
-          } else {
-            let greenList = guess.split("").filter((letter, i) => letter == word[i]);
-
-            for (let i = 0; i < guess.length; i++) {
-              let box = document.getElementById(`r${guessed}c${i}`);
-              let key = document.getElementById(guess[i]);
-              box.innerText = guess[i];
-
-              let instancesOfLetter = word.split("").filter(letter => letter == guess[i]);
-              let instancesGreen = greenList.filter(letter => letter == guess[i]);
-              let allGreen = instancesGreen.length == instancesOfLetter.length;
-              let instancesFound = guess.slice(0, i).split("").filter(letter => letter == guess[i]);
-              let tooMany = instancesFound.length >= instancesOfLetter.length;
-
-              if (guess[i] == word[i]) {
-                box.style.background = "var(--color-green)";
-                key.style.background = "var(--light-green)";
-                greenList.push(i);
-              } else if (word.includes(guess[i]) && !allGreen && !tooMany) {
-                box.style.background = "var(--color-yellow)";
-                if (!key.style.background) key.style.background = "var(--light-yellow)";
-              } else {
-                box.style.background = "gray";
-                if (!key.style.background) key.style.background = "gray";
-              }
-            }
-
-            guessed++;
-            setTimeout(() => {
-              if (guess == word) {
-                alert("Correct!");
-                score += 7 - guessed;
-                if (score > highScore) {
-                  highScore = score;
-                  localStorage.setItem("highScore", highScore);
-                  document.getElementById("highScore").style.color = "var(--light-purple)";
-                }
-                newWord();
-              } else if (guessed == 6) {
-                alert("Game over\nCorrect word: " + word);
-                score = 0;
-                newWord();
-              }
-              document.getElementById("score").innerText = score;
-              document.getElementById("highScore").innerText = highScore;
-              guess = "";
-            }, 0);
-          }
-        } else {
-          alert("Not enough letters");
+      keys.forEach(key => key.style.background = null);
+      word = "";
+      while (!word) {
+        let randomWord = wordList[Math.floor(Math.random() * wordList.length)]; //Get a random word
+        //Check if it's in the dictionary to filter out obscure words
+        let dictEntry = await new Promise((resolve, reject) => {
+          let request = new XMLHttpRequest();
+          request.open("GET", "https://api.dictionaryapi.dev/api/v2/entries/en_US/" + randomWord);
+          request.onload = () => resolve(JSON.parse(request.responseText));
+          request.send(null);
+        });
+        if (dictEntry.title != "No Definitions Found" && dictEntry[0].sourceUrls.length == 1) {
+          word = randomWord;
+          wordDefinition = dictEntry[0].meanings[0].definitions[0].definition;
         }
       }
     }
-  </script>
+    newWord();
+
+    function addLetter(letter) {
+      if (guess.length < 5) {
+        let box = document.getElementById(`r${guessed}c${guess.length}`);
+        box.innerText = letter;
+        guess += letter;
+      }
+    }
+
+    function backspace() {
+      if (guess.length) {
+        let box = document.getElementById(`r${guessed}c${guess.length - 1}`);
+        box.innerText = null;
+        guess = guess.slice(0, -1);
+      }
+    }
+
+    document.addEventListener("keydown", e => {
+      if (/^[a-z]{1}$/.test(e.key)) addLetter(e.key); //If a letter key is pressed, guess that letter
+      if (e.key == "Backspace") backspace();
+      if (e.key == "Enter") guessWord();
+    });
+
+    function guessWord() {
+      if (guess.length == 5) {
+        if (!wordList.includes(guess)) {
+          alert("Not in word list");
+        } else if (!word) {
+          alert("Still getting a word. Try again in a few seconds.");
+        } else {
+          let greenList = guess.split("").filter((letter, i) => letter == word[i]);
+
+          for (let i = 0; i < guess.length; i++) {
+            let box = document.getElementById(`r${guessed}c${i}`);
+            let key = document.getElementById(guess[i]);
+            box.innerText = guess[i];
+
+            let instancesOfLetter = word.split("").filter(letter => letter == guess[i]);
+            let instancesGreen = greenList.filter(letter => letter == guess[i]);
+            let allGreen = instancesGreen.length == instancesOfLetter.length;
+            let instancesFound = guess.slice(0, i).split("").filter(letter => letter == guess[i]);
+            let tooMany = instancesFound.length >= instancesOfLetter.length;
+
+            if (guess[i] == word[i]) {
+              box.style.background = "var(--color-green)";
+              key.style.background = "var(--light-green)";
+              greenList.push(i);
+            } else if (word.includes(guess[i]) && !allGreen && !tooMany) {
+              box.style.background = "var(--color-yellow)";
+              if (!key.style.background) key.style.background = "var(--light-yellow)";
+            } else {
+              box.style.background = "gray";
+              if (!key.style.background) key.style.background = "gray";
+            }
+          }
+
+          guessed++;
+          setTimeout(() => {
+            if (guess == word) {
+              alert("Correct!" + "\n" + wordDefinition);
+              score += 7 - guessed;
+              if (score > highScore) {
+                highScore = score;
+                localStorage.setItem("highScore", highScore);
+                document.getElementById("highScore").style.color = "var(--light-purple)";
+              }
+              newWord();
+            } else if (guessed == 6) {
+              alert("Game over\nCorrect word: " + word + "\n" + wordDefinition);
+              score = 0;
+              newWord();
+            }
+            document.getElementById("score").innerText = score;
+            document.getElementById("highScore").innerText = highScore;
+            guess = "";
+          }, 0);
+        }
+      } else {
+        alert("Not enough letters");
+      }
+    }
+  }
+</script>
+
 </html>
