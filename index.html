@@ -285,6 +285,7 @@
             } else if (guessed == 6) {
               alert("Game over\nCorrect word: " + word + "\n" + wordDefinition);
               score = 0;
+              document.getElementById("highScore").style.color = "white";
               newWord();
             }
             document.getElementById("score").innerText = score;
