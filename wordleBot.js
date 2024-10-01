@@ -34,10 +34,10 @@ function updateRemainingWords(guess) {
 }
 
 function getBestWord(hard) {
-    let outerList = hard ? remainingWords : wordList;
+    let guessList = hard ? remainingWords : wordList;
 
     let expectedInfo = [];
-    outerList.forEach((guess, i) => {
+    guessList.forEach((guess, i) => {
         let possibleResults = {};
 
         //Find how likely each combination of green/yellow/gray is for this word
@@ -84,5 +84,5 @@ function getBestWord(hard) {
         if (expectedInfo[i] == highestE && remainingWords.includes(wordList[i]))
             return wordList[i];
     }
-    return outerList[expectedInfo.indexOf(highestE)];
+    return guessList[expectedInfo.indexOf(highestE)];
 };
