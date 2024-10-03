@@ -21,7 +21,7 @@ function autoPlay(hard = false) {
         for (let letter of guess) addLetter(letter);
         guessWord();
     }
-    setTimeout(() => autoPlay(hard), 101);
+    setTimeout(() => autoPlay(hard), 100);
 }
 
 //Get the words that are still potential solutions
@@ -30,22 +30,30 @@ function updateRemainingWords(guess) {
 
     for (let i in guess) {
         let box = document.getElementById(`r${guessed}c${i}`);
-        if (box.style.background == "var(--color-green)") result += "g";
-        else if (box.style.background == "var(--color-yellow)") result += "y";
-        else if (box.style.background == "gray") result += "G";
+        if (box.style.background == "var(--color-green)") result += "G";
+        else if (box.style.background == "var(--color-yellow)") result += "Y";
+        else if (box.style.background == "gray") result += "g";
     }
     guessResults += guess + "," + result + ";";
 
     remainingWords = remainingWords.filter(word => {
-        checkLoop: for (let i in guess) {
-            if (result[i] == "g" && word[i] != guess[i])
+        for (let i in guess) {
+            if (result[i] == "G" && word[i] != guess[i]) {
                 return false;
-            else if (result[i] == "y" && (!word.includes(guess[i]) || word[i] == guess[i]))
-                return false;
-            else if (result[i] == "G" && word.includes(guess[i])) {
+            } else if (result[i] == "Y") {
+                if (!word.includes(guess[i]) || word[i] == guess[i]) return false;
+                let minInstancesOfLetter = 0;
+                for (let j in guess) if (guess[j] == guess[i] && result[j] != "g") minInstancesOfLetter++;
+                let instancesInWord = 0;
+                for (let j in word) if (word[j] == guess[i]) instancesInWord++;
+                if (instancesInWord < minInstancesOfLetter) return false;
+            } else if (result[i] == "g" && word.includes(guess[i])) {
                 if (word[i] == guess[i]) return false;
-                for (let j in guess) if (guess[j] == guess[i] && result[j] != "G") continue checkLoop;
-                return false;
+                let maxInstancesOfLetter = 0;
+                for (let j in guess) if (guess[j] == guess[i] && result[j] != "g") maxInstancesOfLetter++;
+                let instancesInWord = 0;
+                for (let j in word) if (word[j] == guess[i]) instancesInWord++;
+                if (instancesInWord > maxInstancesOfLetter) return false;
             }
         }
         return true;
@@ -73,12 +81,12 @@ function getBestWord(hard) {
                 let tooMany = instancesFound.length >= instancesOfLetter.length;
 
                 if (guess[j] == word[j]) {
-                    resultCode += "g";
+                    resultCode += "G";
                     greenList.push(j);
                 } else if (word.includes(guess[j]) && !allGreen && !tooMany) {
-                    resultCode += "y";
+                    resultCode += "Y";
                 } else {
-                    resultCode += "G";
+                    resultCode += "g";
                 }
             }
 
