@@ -1,10 +1,22 @@
+//This program automatically guesses the word that is expected to give the most information
 //To activate, call autoPlay() from the console. Use autoPlay(true) to run it with hard mode rules
 
+//Previous guesses are remembered and stored here
+let bestWords = {};
+
 let remainingWords = wordList;
+let guessResults = "";
 
 function autoPlay(hard = false) {
     if (wordReady()) {
-        let guess = (remainingWords.length == 1) ? remainingWords[0] : getBestWord(hard);
+        let guess;
+        if (bestWords[guessResults])
+            guess = bestWords[guessResults];
+        else if (remainingWords.length == 1)
+            guess = remainingWords[0];
+        else
+            guess = getBestWord(hard);
+        bestWords[guessResults] = guess;
         for (let i = 0; i < 5; i++) backspace(); //Clear the existing word
         for (let letter of guess) addLetter(letter);
         guessWord();
@@ -14,18 +26,25 @@ function autoPlay(hard = false) {
 
 //Get the words that are still potential solutions
 function updateRemainingWords(guess) {
-    remainingWords = remainingWords.filter(word => {
-        let boxes = [];
-        for (let i in guess) boxes.push(document.getElementById(`r${guessed}c${i}`));
+    let result = "";
 
+    for (let i in guess) {
+        let box = document.getElementById(`r${guessed}c${i}`);
+        if (box.style.background == "var(--color-green)") result += "g";
+        else if (box.style.background == "var(--color-yellow)") result += "y";
+        else if (box.style.background == "gray") result += "G";
+    }
+    guessResults += guess + "," + result + ";";
+
+    remainingWords = remainingWords.filter(word => {
         checkLoop: for (let i in guess) {
-            if (boxes[i].style.background == "var(--color-green)" && word[i] != guess[i])
+            if (result[i] == "g" && word[i] != guess[i])
                 return false;
-            else if (boxes[i].style.background == "var(--color-yellow)" && (!word.includes(guess[i]) || word[i] == guess[i]))
+            else if (result[i] == "y" && (!word.includes(guess[i]) || word[i] == guess[i]))
                 return false;
-            else if (boxes[i].style.background == "gray" && word.includes(guess[i])) {
+            else if (result[i] == "G" && word.includes(guess[i])) {
                 if (word[i] == guess[i]) return false;
-                for (let j in guess) if (guess[j] == guess[i] && boxes[j].style.background != "gray") continue checkLoop;
+                for (let j in guess) if (guess[j] == guess[i] && result[j] != "G") continue checkLoop;
                 return false;
             }
         }
@@ -79,10 +98,18 @@ function getBestWord(hard) {
     });
 
     let highestE = Math.max(...expectedInfo);
-    //Prioritize words that are valid answers
-    if (!hard) for (i in expectedInfo) {
-        if (expectedInfo[i] == highestE && remainingWords.includes(wordList[i]))
-            return wordList[i];
+    if (!hard) {
+        //On the last guess, always choose a valid answer
+        if (guessed == 5) {
+            let remainingE = expectedInfo.filter((e, i) => remainingWords.includes(wordList[i]));
+            return remainingWords[remainingE.indexOf(Math.max(...remainingE))];
+        }
+
+        //Prioritize words that are valid answers
+        for (i in expectedInfo) {
+            if (expectedInfo[i] == highestE && remainingWords.includes(wordList[i]))
+                return wordList[i];
+        }
     }
     return guessList[expectedInfo.indexOf(highestE)];
 };

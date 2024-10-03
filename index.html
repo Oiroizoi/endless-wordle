@@ -192,7 +192,11 @@
 
     async function newWord() {
       guessed = 0;
+
+      //For wordleBot
       remainingWords = wordList;
+      guessResults = "";
+
       let boxes = Array.from(document.querySelectorAll("td"));
       let keys = Array.from(document.querySelectorAll(".key"));
       boxes.forEach(box => {
@@ -203,7 +207,12 @@
       word = "";
       while (!word) {
         let randomWord = wordList[Math.floor(Math.random() * wordList.length)]; //Get a random word
-        let response = await fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + randomWord);
+        let response;
+        try {
+          response = await fetch("https://api.dictionaryapi.dev/api/v2/entries/en/" + randomWord);
+        } catch {
+          continue;
+        }
         if (!response.ok) continue; //Exclude words without definitions
         let dictEntry = await response.json();
         if (dictEntry[0].sourceUrls.length == 1) { //Exclude words that are inflections of other words
