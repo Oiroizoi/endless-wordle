@@ -151,7 +151,7 @@
     let wordDefinition;
     let guess = "";
     let score = 0;
-    let highScore = localStorage.getItem("highScore") || 0;
+    let highScore = localStorage.getItem("wordle-highScore") || 0;
 
     document.getElementById("highScore").innerHTML = highScore;
 
@@ -296,7 +296,7 @@
               score += 7 - guessed;
               if (score > highScore) {
                 highScore = score;
-                localStorage.setItem("highScore", highScore);
+                localStorage.setItem("wordle-highScore", highScore);
                 document.getElementById("highScore").style.color = "var(--light-purple)";
               }
               newWord();
