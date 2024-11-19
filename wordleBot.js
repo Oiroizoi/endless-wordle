@@ -2,7 +2,7 @@
 //To activate, call autoPlay() from the console. Use autoPlay(true) to run it with hard mode rules
 
 //Previous guesses are remembered and stored here
-let bestWords = {};
+let cache = {};
 
 let remainingWords = wordList;
 let guessResults = "";
@@ -10,13 +10,13 @@ let guessResults = "";
 function autoPlay(hard = false) {
     if (wordReady()) {
         let guess;
-        if (bestWords[guessResults])
-            guess = bestWords[guessResults];
+        if (cache[guessResults])
+            guess = cache[guessResults];
         else if (remainingWords.length == 1)
             guess = remainingWords[0];
         else
             guess = getBestWord(hard);
-        bestWords[guessResults] = guess;
+        cache[guessResults] = guess;
         for (let i = 0; i < 5; i++) backspace(); //Clear the existing word
         for (let letter of guess) addLetter(letter);
         guessWord();
